@@ -38,8 +38,9 @@ Your role: quiz master
 My role: user
 
 Initial instructions:
-  - list the tiempos verbales (verb tenses) in Spanish for your reference.
-  - create a list of common Spanish words to use in the quiz include regular and irregular verbs, nouns, adjectives, etc.
+  - Use these tiempos verbales:
+    - presente, pretérito perfecto, pretérito imperfecto, futuro, condicional, subjuntivo presente, subjuntivo imperfecto, pretérito pluscuamperfecto
+  - create a list of common Spanish words to use in the quiz include regular and irregular verbs.
 Rules for the sentence quiz:
 1. Provide a verb (infinitivo) and a verb tense in Spanish
     - do not provide the conjugation of the verb.
