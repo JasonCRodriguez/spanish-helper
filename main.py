@@ -4,8 +4,12 @@ from ollama._types import ResponseError as ollamaResponseError
 import logging
 import random
 from wordfreq import top_n_list
+from collections import Counter
 
 from instructions import get_instructions
+
+from rich.console import Console
+from rich.markdown import Markdown
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -15,6 +19,7 @@ class SpanishHelper():
 
     def __init__(self):
 
+        self.console = Console()
         self.initialize_model()
 
     def initialize_model(self):
@@ -33,6 +38,36 @@ class SpanishHelper():
             logging.info(f"Model '{self.MODEL_NAME}' pulled successfully.")
         
         logging.info("Model initialized successfully.")
+
+    def get_or_setup_database(self):
+        """
+        Get or setup the database for the Spanish helper.
+        This function is a placeholder for any database setup logic.
+        """
+        try:
+            with open('database.json', 'r') as file:
+                data = json.load(file)
+                logging.info("Database loaded successfully.")
+                return data
+        except FileNotFoundError:
+            logging.warning("Database not found. Setting up a new database.")
+            top_n_es_list = lambda lang, n: [word for word in top_n_list('es', 1000) if word.isalpha() and len(word) > 1]
+            top_n_en_list = lambda lang, n: [word for word in top_n_list('en', 1000) if word.isalpha() and len(word) > 1]
+            top_n_list = top_n_es_list + top_n_en_list
+            data = {
+                "word_list": top_n_list,
+                "words_correct_counter": {},
+                "tiempos_verbales": [
+                    "presente", "pretérito perfecto", "imperfecto", "futuro simple",
+                    "condicional simple", "pretérito imperfecto", "pretérito pluscuamperfecto",
+                    "futuro perfecto", "condicional perfecto", "presente subjuntivo",
+                    "imperfecto subjuntivo", "pretérito perfecto subjuntivo", "futuro subjuntivo"
+                ],
+                "sentence_correct_counter": {},
+            }
+            with open('database.json', 'w') as file:
+                json.dump(data, file)
+            return data
     
     def base_loop(self, messages=None, mode=''):
         """
@@ -44,8 +79,11 @@ class SpanishHelper():
                 messages=[*messages]
             )
         while True:
-            print(response.message.content + '\n')
-            user_input = input('<{}>: '.format(mode))
+            self.console.print(Markdown(response.message.content + '\n'))
+            user_input = input('<{}> (type "exit" to return): '.format(mode))
+            if user_input.strip().lower() == "exit":
+                self.console.print("[bold yellow]Saliendo al menú principal...[/bold yellow]\n")
+                break
             response = chat(
                 self.MODEL_NAME,
                 messages=[*messages, {'role': 'user', 'content': user_input}],
@@ -86,7 +124,7 @@ class SpanishHelper():
             print("2. Sentence Quiz")
             print("3. Role-Play")
             print("4. Story Building")
-            print("5. Salir")
+            print("9. Salir")
             choice = input("Selecciona un modo de juego (1-5): ")
             if choice == "1":
                 self.word_quiz()
@@ -96,7 +134,7 @@ class SpanishHelper():
                 self.role_play()
             elif choice == "4":
                 self.story_building()
-            elif choice == "5":
+            elif choice == "9":
                 print("¡Hasta luego!")
 
                 break
