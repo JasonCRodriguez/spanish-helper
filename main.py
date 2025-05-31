@@ -115,6 +115,11 @@ class SpanishHelper():
         print("\n[Story Building]")
         messages = [{"role": "system", "content": get_instructions('story')}]
         self.base_loop(messages=messages, mode='story')
+    
+    def reading_comprehension(self):
+        print("\n[Reading Comprehension]")
+        messages = [{"role": "system", "content": get_instructions('reading_comprehension')}]
+        self.base_loop(messages=messages, mode='reading_comprehension')
 
     def main(self):
         while True:
@@ -123,8 +128,9 @@ class SpanishHelper():
             print("2. Sentence Quiz")
             print("3. Role-Play")
             print("4. Story Building")
-            print("5. Salir")
-            choice = input("Selecciona un modo de juego (1-5): ")
+            print("5. Reading Comprehension")
+            print("6. Salir")
+            choice = input("Selecciona un modo de juego (1-6): ")
             if choice == "1":
                 self.word_quiz()
             elif choice == "2":
@@ -134,6 +140,8 @@ class SpanishHelper():
             elif choice == "4":
                 self.story_building()
             elif choice == "5":
+                self.reading_comprehension()
+            elif choice == "6":
                 print("¡Hasta luego!")
 
                 break

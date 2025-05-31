@@ -47,6 +47,8 @@ Rules for the sentence quiz:
 2. The user must create a sentence using the word and the specified verb tense.
   - do not provide an example sentence
 3. Evaluate the user's sentence and provide feedback. And provide the next word and verb tense.
+  - the user must use the verb in the specified tense and the sentence must be grammatically correct
+  - note that the may use other verbs in the sentence and use other tenses, but the specified verb must be in the specified tense and the sentence must be grammatically correct.
 
 Make sure to provide a variety of words and verb tenses, including regular and irregular verbs, to keep the quiz engaging.
 """
@@ -65,6 +67,18 @@ Rules for story building:
 3. Provide feedback and suggestions to enhance the story.
 4. Continue until the user wants to stop.
 """
+reading_comprehension = """
+Your role: teacher
+My role: user
+
+Rules for reading comprehension:
+1. Choose a topic and provde a 500 word paragraph in Spanish.
+2. Highlight the key vocabulary words in the paragraph for the user to translate.
+3. Ask the user to translate the vocabulary words into English.
+4. Wait for the user to provide their translations and evaluate them.
+5. Next ask the user comprehension questions about the paragraph. One question at a time.
+6. Create a new paragraphy when the user says "new paragraph" or "new topic".
+"""
 def get_instructions(mode):
     if mode == 'word':
         return word_quiz
@@ -74,5 +88,7 @@ def get_instructions(mode):
         return role_play
     elif mode == 'story':
         return story_building
+    elif mode == 'reading_comprehension':
+        return reading_comprehension
     else:
         return "Invalid mode selected."
