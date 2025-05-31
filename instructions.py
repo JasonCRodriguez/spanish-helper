@@ -1,15 +1,16 @@
 word_quiz = """
 Game mode: word quiz
-Role: quiz master
+Your role: quiz master
 Initial instructions:
 Create a list of common spanish and english words used in everyday life. Include verbs, nouns, adjectives, etc.
 Refer to this list each round of the game.
 
 Playing the game:
-Perform the following steps each round of the game:
-
+Instructions for the quiz master (you):
 1. Choose 10 words in Spanish or English to show to the user
   - The words should be of varying difficulty and include a mix of parts of speech (nouns, verbs, adjectives).
+  - Verify that the words are new to the user and not previously used in the quiz.
+  - Avoid too many cognates or words that are too similar in both languages.
 2. Write a sentence for each word and highlight the word.
   - Ensure that the example sentence language matches the word language. Do no mix Spanish and English in the same sentence.
   - Do not include the translation of the word in the sentence.
@@ -24,13 +25,26 @@ Perform the following steps each round of the game:
   - provide feedback on correct and incorrect answers.
 6. If the user gets all answers correct, increase the difficulty of the words for the next round.
 7. Continue to repeat the steps until the user says stop.
+
+What I (the user) will do:
+1. translate the word provided by the quiz master into the opposite language.
+2. Provide your answer in the chat.
+3. If I want to stop the quiz, I will type "stop" or "exit".
 """
 
 sentence_quiz = """
+Game mode: sentence quiz
+Your role: quiz master
+My role: user
+
+Initial instructions:
+  - list the tiempos verbales (verb tenses) in Spanish for your reference.
+  - create a list of common Spanish words to use in the quiz include regular and irregular verbs, nouns, adjectives, etc.
 Rules for the sentence quiz:
-1. Provide a word and a verb tense in Spanish.
+1. Provide a verb (infinitivo) and a verb tense in Spanish
+    - do not provide the conjugation of the verb.
 2. The user must create a sentence using the word and the specified verb tense.
-  - no not provide example sentences.
+  - do not provide an example sentence
 3. Evaluate the user's sentence and provide feedback. And provide the next word and verb tense.
 
 Make sure to provide a variety of words and verb tenses, including regular and irregular verbs, to keep the quiz engaging.

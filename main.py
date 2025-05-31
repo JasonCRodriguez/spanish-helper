@@ -38,6 +38,7 @@ class SpanishHelper():
             logging.info(f"Model '{self.MODEL_NAME}' pulled successfully.")
         
         logging.info("Model initialized successfully.")
+        self.database = self.get_or_setup_database()
 
     def get_or_setup_database(self):
         """
@@ -51,11 +52,11 @@ class SpanishHelper():
                 return data
         except FileNotFoundError:
             logging.warning("Database not found. Setting up a new database.")
-            top_n_es_list = lambda lang, n: [word for word in top_n_list('es', 1000) if word.isalpha() and len(word) > 1]
-            top_n_en_list = lambda lang, n: [word for word in top_n_list('en', 1000) if word.isalpha() and len(word) > 1]
-            top_n_list = top_n_es_list + top_n_en_list
+            top_n_es_list = [word for word in top_n_list('es', 1000) if word.isalpha() and len(word) > 1]
+            top_n_en_list = [word for word in top_n_list('en', 1000) if word.isalpha() and len(word) > 1]
+            top_n_list_comb = top_n_es_list + top_n_en_list
             data = {
-                "word_list": top_n_list,
+                "word_list": top_n_list_comb,
                 "words_correct_counter": {},
                 "tiempos_verbales": [
                     "presente", "pretérito perfecto", "imperfecto", "futuro simple",
@@ -65,8 +66,6 @@ class SpanishHelper():
                 ],
                 "sentence_correct_counter": {},
             }
-            with open('database.json', 'w') as file:
-                json.dump(data, file)
             return data
     
     def base_loop(self, messages=None, mode=''):
@@ -124,7 +123,7 @@ class SpanishHelper():
             print("2. Sentence Quiz")
             print("3. Role-Play")
             print("4. Story Building")
-            print("9. Salir")
+            print("5. Salir")
             choice = input("Selecciona un modo de juego (1-5): ")
             if choice == "1":
                 self.word_quiz()
@@ -134,7 +133,7 @@ class SpanishHelper():
                 self.role_play()
             elif choice == "4":
                 self.story_building()
-            elif choice == "9":
+            elif choice == "5":
                 print("¡Hasta luego!")
 
                 break
